@@ -1,0 +1,42 @@
+name: Daily Anime Video
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # runs daily at 07:00 UTC (edit as needed)
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system deps (ffmpeg)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate video
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: |
+          python video_generator.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-video
+          path: output/
