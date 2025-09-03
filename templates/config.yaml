@@ -1,0 +1,30 @@
+# templates/config.yaml
+width: 1080
+height: 1920
+fps: 24
+duration_seconds: 20
+
+text_color: "#FFFFFF"
+shadow_color: "#000000"
+
+progress_bg: "#222222"
+progress_fg: "#00E5FF"
+
+# Provide font file names placed in assets/fonts/
+font_bold: "assets/fonts/Inter-Bold.ttf"
+font_regular: "assets/fonts/Inter-Regular.ttf"
+
+title:
+  fontsize: 100
+  x: 0.05   # relative left offset (0..1), used to shift center of image island (we also center text inside image)
+  y: 0.12
+subtitle:
+  fontsize: 52
+  x: 0.05
+  y: 0.22
+
+use_tts: true
+voice_lang: "en"
+music_volume: 0.12
+
+email_subject_prefix: "Daily Anime — AutoVideo"
